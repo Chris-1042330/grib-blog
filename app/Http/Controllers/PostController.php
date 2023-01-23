@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -12,10 +13,16 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::latest('updated_at')->paginate(10);
-        return view('posts.index')->with('posts', $posts);
+        if($request->has('all')){
+            $posts = Post::where('expiration_date', '>', now())->latest('updated_at')->paginate(10);
+            return view('posts.index')->with('posts', $posts);
+        }
+        else{
+            $posts = Post::latest('updated_at')->paginate(10);
+            return view('posts.index')->with('posts', $posts);
+        }
     }
 
     /**
@@ -38,11 +45,14 @@ class PostController extends Controller
     {
         $request->validate([
             'title' => 'required|max:120',
-            'text' => 'required'
+            'text' => 'required',
+
         ]);
         $post = new Post([
             'title' => $request->title,
-            'text' => $request->text
+            'text' => $request->text,
+            'author' => Auth::user()->name, // De username van de ingelogde gebruiker wordt opgeslagen als author
+            'expiration_date' => $request->expiration,
         ]);
         $post->save();
 
@@ -87,7 +97,8 @@ class PostController extends Controller
 
         $post->update([
             'title' => $request->title,
-            'text' => $request->text
+            'text' => $request->text,
+            'expiration_date' => $request->expiration,
         ]);
 
         return to_route('posts.show', $post);

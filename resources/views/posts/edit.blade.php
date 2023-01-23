@@ -4,21 +4,22 @@
     <input
         type="text"
         name="title"
-        field="title"
         placeholder="Title"
-        autocomplete="off"
-        :value="@old('title', $post->title)">
-
-    </input>
+        class="w-full"
+        value="{{$post->title}}">
 
     <textarea
         name="text"
         rows="10"
-        field="text"
         placeholder="Start typing here..."
-        :value="@old('text', $post->text)">
+        class="w-full mt-6">{{$post->text}}</textarea>
+    <input
+        type="date"
+        name="expiration"
+        placeholder="Expiration Date"
+        class="w-full mt-6"
+        value="{{$post->expiration_date}}">
 
-    </textarea>
 
 
     <button class="mt-6">Save Post</button>

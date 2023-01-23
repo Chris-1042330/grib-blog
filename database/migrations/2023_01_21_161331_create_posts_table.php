@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->longText('text');
-//            $table->dateTime('expiration-date');
+            $table->string('author');
+            $table->date('expiration_date');
             $table->timestamps();
         });
     }
