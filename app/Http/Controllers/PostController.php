@@ -15,7 +15,7 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->has('all')){
+        if($request->has('active')){
             $posts = Post::where('expiration_date', '>', now())->latest('updated_at')->paginate(10);
             return view('posts.index')->with('posts', $posts);
         }
@@ -51,7 +51,7 @@ class PostController extends Controller
         $post = new Post([
             'title' => $request->title,
             'text' => $request->text,
-            'author' => Auth::user()->name, // De username van de ingelogde gebruiker wordt opgeslagen als author
+            'author' => $request->author,
             'expiration_date' => $request->expiration,
         ]);
         $post->save();
@@ -98,6 +98,7 @@ class PostController extends Controller
         $post->update([
             'title' => $request->title,
             'text' => $request->text,
+            'author' => $request->author,
             'expiration_date' => $request->expiration,
         ]);
 
@@ -113,6 +114,6 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-        return to_route();
+        return to_route('posts.index');
     }
 }

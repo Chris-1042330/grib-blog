@@ -21,10 +21,8 @@
     <input
         type="text"
         name="author"
-        disabled="true"
         placeholder="Author"
-        class="w-full mt-6"
-        value="{{$user}}">
+        class="w-full mt-6">
 
     <button class="mt-6">Save Blog Item</button>
 </form>
