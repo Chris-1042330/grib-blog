@@ -9,7 +9,7 @@
                 <strong>Updated at: </strong> {{ $post->updated_at->diffForHumans() }}
             </p>
             <p>
-                @if(date('Y-m-d H:i:s') < $post->expiration_date)
+                @if($post->status == 1)
                     ✅ Active
                 @else
                     ⛔ Inactive

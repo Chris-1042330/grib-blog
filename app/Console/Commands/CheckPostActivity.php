@@ -42,9 +42,6 @@ class CheckPostActivity extends Command
             $post->save();
         });
 
-//        foreach ($posts as $post){
-//
-//        }
         $this->newLine();
         $this->info("Check complete!");
     }
