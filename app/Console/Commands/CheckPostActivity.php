@@ -28,15 +28,24 @@ class CheckPostActivity extends Command
      */
     public function handle()
     {
-//        $this->line(Post::all());
-        $posts = Post::all();
-
-        foreach ($posts as $post){
-            $post->update([
-                'status' => "placeholder",
-                'expiration_date' => "placeholder"
-            ]);
+        $posts = $this->withProgressBar(Post::all(), function ($post){
+            if(now() <= $post->expiration_date){
+                $post->update([
+                    'status' => 1,
+                ]);
+            }
+            else{
+                $post->update([
+                    'status' => 0,
+                ]);
+            }
             $post->save();
-        }
+        });
+
+//        foreach ($posts as $post){
+//
+//        }
+        $this->newLine();
+        $this->info("Check complete!");
     }
 }

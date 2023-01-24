@@ -16,7 +16,7 @@ class PostController extends Controller
     public function index(Request $request)
     {
         if($request->has('active')){
-            $posts = Post::where('expiration_date', '>', now())->latest('updated_at')->paginate(20);
+            $posts = Post::where('status', '1')->latest('updated_at')->paginate(20);
 
             return view('posts.index')->with('posts', $posts);
         }
@@ -99,7 +99,6 @@ class PostController extends Controller
         $post->update([
             'title' => $request->title,
             'text' => $request->text,
-            'author' => $request->author,
             'expiration_date' => $request->expiration,
         ]);
 
