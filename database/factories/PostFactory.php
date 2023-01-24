@@ -20,6 +20,7 @@ class PostFactory extends Factory
             'title' => fake()->name(),
             'text' => fake()->paragraph,
             'author' => fake()->name(),
+            'status' => fake()->boolean(),
             'expiration_date' => fake()->date()
         ];
     }

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->longText('text');
             $table->string('author');
             $table->date('expiration_date');
+            $table->boolean('status');
             $table->timestamps();
         });
     }
